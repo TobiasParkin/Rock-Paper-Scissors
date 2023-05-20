@@ -5,12 +5,13 @@
     {
         public string MainMenuDialogue()
         {
-            return "Please enter one of the following options - (0 - Player Vs Computer, 1 - Quit)";
+            return "Welcome to Rock Paper Scissors" +
+                   "\nPlease enter one of the following options - (0 - Player Vs Computer, 1 - Quit)";
         }
 
         public string PlayerVsComputerInstructions()
         {
-            return "Choose your move (0 - Rock, 1 - Scissors, 2 - Paper)";
+            return "Choose your move (1 - Rock, 2 - Scissors, 3 - Paper)";
         }
 
         public string PlayerVsComputerScoreText(int _playerScore, int _computerScore)

@@ -43,10 +43,6 @@ return _gameModeChosen;
 
         private bool MainMenu()
         {
-            GameIntro gameIntro = new GameIntro();
-
-            gameIntro.RunIntro();
-
             bool _gameOptionIsValid = false;
 
             while (!_gameOptionIsValid)
@@ -65,70 +61,72 @@ return _gameModeChosen;
 
         private void PlayerVsComputer()
         {
-            Console.Clear();
-
             PostRoundStates _postRoundState = PostRoundStates.Default;
+
+            Moves _playerOption;
 
             Random rnd = new Random();
 
-Moves _computerOption = Enum.Parse<Moves>(rnd.Next(0, 3).ToString());
+            Console.Clear();
 
-Console.WriteLine(_gameDialogue.PlayerVsComputerScoreText(_playerScore, _computerScore));
+            Console.WriteLine(_gameDialogue.PlayerVsComputerScoreText(_playerScore, _computerScore));
 
             Console.WriteLine(_gameDialogue.PlayerVsComputerInstructions());
 
+            Moves _computerOption = Enum.Parse<Moves>(rnd.Next(1, 4).ToString());
+
 string _playerInput = Console.ReadKey().KeyChar.ToString();
 
-            Moves _playerOption = Enum.Parse<Moves>(_playerInput);
+Enum.TryParse(_playerInput, out _playerOption);
 
-            if (_computerOption == _playerOption)
+if (Enum.IsDefined(typeof(Moves), _playerOption) && _playerOption != Moves.Unselected)
+{
+    if (_computerOption == _playerOption)
+    {
+        _postRoundState = PostRoundStates.Tie;
+    }
+
+    switch (_playerOption)
+    {
+        case Moves.Rock:
+            if (_computerOption == Moves.Scissors)
             {
-                _postRoundState = PostRoundStates.Tie;
+                _postRoundState = PostRoundStates.Win;
             }
-
-            switch (_playerOption)
+            else if (_computerOption == Moves.Paper)
             {
-                case Moves.Rock:
-                     if (_computerOption == Moves.Scissors)
-                     {
-                         _postRoundState = PostRoundStates.Win;
-                     }
-                    else if (_computerOption == Moves.Paper)
-                    {
-                        _postRoundState = PostRoundStates.Lose;
-                    }
-                    break;
-                case Moves.Scissors:
-if (_computerOption == Moves.Rock)
-                    {
-                        _postRoundState = PostRoundStates.Lose;
-                    }
-                    else if (_computerOption == Moves.Paper)
-                    {
-                        _postRoundState = PostRoundStates.Win;
-                    }
-                    break;
-                case Moves.Paper:
-                     if (_computerOption == Moves.Rock)
-                    {
-                        _postRoundState = PostRoundStates.Win;
-                    }
-                    else if (_computerOption == Moves.Scissors)
-                     {
-                         _postRoundState = PostRoundStates.Lose;
-                     }
-                    break;
-                default:
-                    break;
+                _postRoundState = PostRoundStates.Lose;
             }
-
-            if (Enum.IsDefined(typeof(Moves), _playerOption))
+            break;
+        case Moves.Scissors:
+            if (_computerOption == Moves.Rock)
             {
-                _movesUsed.Add(_playerOption);
+                _postRoundState = PostRoundStates.Lose;
+            }
+            else if (_computerOption == Moves.Paper)
+            {
+                _postRoundState = PostRoundStates.Win;
+            }
+            break;
+        case Moves.Paper:
+            if (_computerOption == Moves.Rock)
+            {
+                _postRoundState = PostRoundStates.Win;
+            }
+            else if (_computerOption == Moves.Scissors)
+            {
+                _postRoundState = PostRoundStates.Lose;
+            }
+            break;
+        default:
+            break;
+    }
 
-                _movesUsed.Add(_computerOption);
+    _movesUsed.Add(_playerOption);
 
-                PostRoundScreen(_postRoundState, _playerOption, _computerOption);
+    _movesUsed.Add(_computerOption);
+
+    PostRoundScreen(_postRoundState, _playerOption, _computerOption);
             }
         }
 
