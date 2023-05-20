@@ -8,7 +8,7 @@
         {
             bool _isGameRunning = true;
 
-            Game game = new Game();
+            Game game = Game.Instance;
 
         // Initialise Game
 game.Initialise();

@@ -1,20 +1,20 @@
 ﻿namespace Rock_Paper_Scissors.Core
 {
     using System;
-    using System.Collections.Generic;
     using Resources.MoveSet;
-    using Resources.Dialogue;
     using Resources.States;
-    using System.Linq;
-    public class Game
-    {
-        private GameStates _state;
-        private List<Moves> _movesUsed = new List<Moves>();
-        private int _playerScore { get; set; }
-private int _computerScore { get; set; }
-private int _numberOfRounds { get; set; }
 
-private readonly GameDialogue _gameDialogue = new GameDialogue();
+    public sealed class Game
+    {
+        // Thread safe .Net 4 Singleton Design pattern
+        private static Lazy<Game> _instance = new Lazy<Game>(() => new Game());
+
+        public static Game Instance
+        {
+            get => _instance.Value;
+        }
+
+        private GameManager _gameManager = GameManager.Instance;
 
         public bool Initialise()
         {
@@ -25,7 +25,7 @@ return _gameModeChosen;
 
         public bool Update()
         {
-            switch (_state)
+            switch (_gameManager.GetGameState())
             {
                 case GameStates.PlayerVsComputer:
                     PlayerVsComputer();
@@ -47,11 +47,17 @@ return _gameModeChosen;
 
             while (!_gameOptionIsValid)
             {
-                Console.WriteLine(_gameDialogue.MainMenuDialogue());
+                _gameManager.GetGameDialogueInstance().MainMenuDialogue();
 
                 string _gameOption = Console.ReadKey().KeyChar.ToString();
 
-                _gameOptionIsValid = Enum.TryParse(_gameOption, out _state);
+                GameStates _gameState = _gameManager.GetGameState();
+
+                Enum.TryParse(_gameOption, out _gameState);
+
+                _gameOptionIsValid = Enum.IsDefined(typeof(GameStates), _gameState);
+
+_gameManager.SetGameState(_gameState);
 
                 Console.Clear();
             }
@@ -61,17 +67,15 @@ return _gameModeChosen;
 
         private void PlayerVsComputer()
         {
-            PostRoundStates _postRoundState = PostRoundStates.Default;
+Console.Clear();
 
             Moves _playerOption;
 
             Random rnd = new Random();
 
-            Console.Clear();
+            _gameManager.GetGameDialogueInstance().PlayerVsComputerScoreText(_gameManager.GetPlayerOneScore(), _gameManager.GetPlayerTwoScore());
 
-            Console.WriteLine(_gameDialogue.PlayerVsComputerScoreText(_playerScore, _computerScore));
-
-            Console.WriteLine(_gameDialogue.PlayerVsComputerInstructions());
+            _gameManager.GetGameDialogueInstance().PlayerVsComputerInstructions();
 
             Moves _computerOption = Enum.Parse<Moves>(rnd.Next(1, 4).ToString());
 
@@ -81,53 +85,60 @@ Enum.TryParse(_playerInput, out _playerOption);
 
 if (Enum.IsDefined(typeof(Moves), _playerOption) && _playerOption != Moves.Unselected)
 {
-    if (_computerOption == _playerOption)
-    {
-        _postRoundState = PostRoundStates.Tie;
-    }
+    ExectueRound(_playerOption, _computerOption);
+            }
+        }
 
-    switch (_playerOption)
-    {
-        case Moves.Rock:
-            if (_computerOption == Moves.Scissors)
-            {
-                _postRoundState = PostRoundStates.Win;
-            }
-            else if (_computerOption == Moves.Paper)
-            {
-                _postRoundState = PostRoundStates.Lose;
-            }
-            break;
-        case Moves.Scissors:
-            if (_computerOption == Moves.Rock)
-            {
-                _postRoundState = PostRoundStates.Lose;
-            }
-            else if (_computerOption == Moves.Paper)
-            {
-                _postRoundState = PostRoundStates.Win;
-            }
-            break;
-        case Moves.Paper:
-            if (_computerOption == Moves.Rock)
-            {
-                _postRoundState = PostRoundStates.Win;
-            }
-            else if (_computerOption == Moves.Scissors)
-            {
-                _postRoundState = PostRoundStates.Lose;
-            }
-            break;
-        default:
-            break;
-    }
+        private void ExectueRound(Moves _playerOption, Moves _player2Option)
+        {
+            PostRoundStates _postRoundState = PostRoundStates.Default;
 
-    _movesUsed.Add(_playerOption);
-
-    _movesUsed.Add(_computerOption);
-
-    PostRoundScreen(_postRoundState, _playerOption, _computerOption);
+            if (_player2Option == _playerOption)
+            {
+                _postRoundState = PostRoundStates.Tie;
             }
+
+            switch (_playerOption)
+            {
+                case Moves.Rock:
+                    if (_player2Option == Moves.Scissors)
+                    {
+                        _postRoundState = PostRoundStates.Win;
+                    }
+                    else if (_player2Option == Moves.Paper)
+                    {
+                        _postRoundState = PostRoundStates.Lose;
+                    }
+                    break;
+                case Moves.Scissors:
+                    if (_player2Option == Moves.Rock)
+                    {
+                        _postRoundState = PostRoundStates.Lose;
+                    }
+                    else if (_player2Option == Moves.Paper)
+                    {
+                        _postRoundState = PostRoundStates.Win;
+                    }
+                    break;
+                case Moves.Paper:
+                    if (_player2Option == Moves.Rock)
+                    {
+                        _postRoundState = PostRoundStates.Win;
+                    }
+                    else if (_player2Option == Moves.Scissors)
+                    {
+                        _postRoundState = PostRoundStates.Lose;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+_gameManager.AddMoveToMovesUsedTracker(_playerOption);
+
+_gameManager.AddMoveToMovesUsedTracker(_player2Option);
+
+            PostRoundScreen(_postRoundState, _playerOption, _player2Option);
         }
 
         private void PostRoundScreen(PostRoundStates _postRoundState, Moves _playerMove, Moves _computerMove)
@@ -143,28 +154,28 @@ if (Enum.IsDefined(typeof(Moves), _playerOption) && _playerOption != Moves.Unsel
                 case PostRoundStates.Lose:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(_postRoundState);
-                    ++_computerScore;
+                    _gameManager.IncrementPlayerTwoScoreByOne();
                     break;
                 case PostRoundStates.Win:
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine(_postRoundState);
-                    ++_playerScore;
+                    _gameManager.IncrementPlayerOneScoreByOne();
                     break;
 default:
     break;
             }
 
-            ++_numberOfRounds;
+            _gameManager.IncrementNumberOfRoundsByOne();
 
             Console.ForegroundColor = ConsoleColor.White;
 
-            Console.WriteLine(_gameDialogue.PostRoundScreenText(_playerMove, _computerMove));
+            _gameManager.GetGameDialogueInstance().PostRoundScreenText(_playerMove, _computerMove);
 
             Console.ReadKey();
 
-            if (_playerScore == 3 || _computerScore == 3)
+            if (_gameManager.GetPlayerOneScore() == 3 || _gameManager.GetPlayerTwoScore() == 3)
             {
-                _state = GameStates.GameOver;
+                _gameManager.SetGameState(GameStates.GameOver);
             }
         }
 
@@ -172,18 +183,13 @@ default:
         {
             Console.Clear();
 
-            string _winner = _computerScore > _playerScore ? "Computer" :
-                _computerScore != _playerScore ? "Player" : "No-one it was a Tie";
+            string _winner = _gameManager.CalculateWinner();
 
-            string _mostUsedMove = _movesUsed.GroupBy(x => x)
-                    .OrderByDescending(y => y.Key)
-                    .Select(z => z.Key)
-                                    .FirstOrDefault()
-                    .ToString();
+            string _numberOfRoundsUsed = _gameManager.GetNumberOfRounds().ToString();
 
-            _mostUsedMove = _movesUsed.Count > 0 ? _mostUsedMove : "None";
+            string _mostUsedMove = _gameManager.CalculateMostUsedMove();
 
-Console.WriteLine(_gameDialogue.GameOverScreenText(_winner, _numberOfRounds.ToString(), _mostUsedMove));
+            _gameManager.GetGameDialogueInstance().GameOverScreenText(_winner, _numberOfRoundsUsed, _mostUsedMove);
         }
     }
 }
