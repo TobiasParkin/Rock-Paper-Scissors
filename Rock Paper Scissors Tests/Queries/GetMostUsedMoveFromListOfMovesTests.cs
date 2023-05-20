@@ -7,29 +7,29 @@ namespace Rock_Paper_Scissors_Tests.Queries
         [Fact]
         public void ExecuteReturnsNone()
         {
-            var query = new GetMostUsedMoveFromListOfMoves();
+            var _query = new GetMostUsedMoveFromListOfMoves();
 
-            var listOfUsedMoves = new List<Moves>() { };
+            var _listOfUsedMoves = new List<Moves>() { };
 
-            var result = query.Execute(listOfUsedMoves);
+            var _result = _query.Execute(_listOfUsedMoves);
 
-            var expectedResult = "None";
+            var _expectedResult = "None";
 
-            Assert.Equal(expectedResult, result);
+            Assert.Equal(_expectedResult, _result);
         }
 
         [Fact]
         public void ExecuteReturnsRock()
         {
-            var query = new GetMostUsedMoveFromListOfMoves();
+            var _query = new GetMostUsedMoveFromListOfMoves();
 
-            var listOfUsedMoves = new List<Moves>() {Moves.Rock, Moves.Rock, Moves.Paper, Moves.Paper, Moves.Lizard, Moves.Rock, Moves.Scissors, Moves.Spock};
+            var _listOfUsedMoves = new List<Moves>() {Moves.Rock, Moves.Rock, Moves.Paper, Moves.Paper, Moves.Lizard, Moves.Rock, Moves.Scissors, Moves.Spock};
 
-            var result = query.Execute(listOfUsedMoves);
+            var _result = _query.Execute(_listOfUsedMoves);
 
-            var expectedResult = "Rock";
+            var _expectedResult = "Rock";
 
-            Assert.Equal(expectedResult, result);
+            Assert.Equal(_expectedResult, _result);
         }
     }
 }
