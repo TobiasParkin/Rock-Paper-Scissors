@@ -3,6 +3,6 @@
     public enum GameStates
     {
 PlayerVsComputer = 0,
-PlayerVsPlayer= 1
+GameOver = 1
     }
 }

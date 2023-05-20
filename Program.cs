@@ -6,13 +6,15 @@
     {
         static void Main(string[] args)
         {
+            bool _isGameRunning = true;
+
             Game game = new Game();
 
 game.Initialise();
 
-            while (true)
+            while (_isGameRunning)
             {
-                game.Update();
+                _isGameRunning = game.Update();
             }
         }
     }
