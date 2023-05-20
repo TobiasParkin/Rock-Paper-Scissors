@@ -15,6 +15,7 @@ namespace Rock_Paper_Scissors.Core
             get => _instance.Value;
         }
 
+            // Dictionary of Move and list of moves weak too
         private static readonly Dictionary<Moves, List<Moves>> _rules = new Dictionary<Moves, List<Moves>>
         {
             {Moves.Rock, new List<Moves> {Moves.Paper}},
