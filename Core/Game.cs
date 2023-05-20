@@ -1,13 +1,11 @@
-﻿
-using System.Linq;
-
-namespace Rock_Paper_Scissors.Core
+﻿namespace Rock_Paper_Scissors.Core
 {
     using System;
     using System.Collections.Generic;
     using Resources.MoveSet;
     using Resources.Dialogue;
     using Resources.States;
+    using System.Linq;
     public class Game
     {
         private GameStates _state;
