@@ -110,5 +110,10 @@ private readonly RulesManager _rulesManager = RulesManager.Instance;
         {
             return _rulesManager.GetMoveOutcome(_playerOneMove, _playerTwoMove);
         }
+
+        public void ShowPostRoundScreen(PostRoundStates _postRoundState)
+        {
+            _gameDialogue.PostRoundScreenOutcomeText(_postRoundState);
+        }
     }
 }

@@ -105,30 +105,22 @@ _gameManager.AddMoveToMovesUsedTracker(_player2Option);
         private void PostRoundScreen(PostRoundStates _postRoundState, Moves _playerMove, Moves _computerMove)
         {
             Console.Clear();
+            
+_gameManager.ShowPostRoundScreen(_postRoundState);
 
-            switch (_postRoundState)
-            {
-                case PostRoundStates.Tie:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(_postRoundState);
-                    break;
-                case PostRoundStates.Lose:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine(_postRoundState);
-                    _gameManager.IncrementPlayerTwoScoreByOne();
-                    break;
-                case PostRoundStates.Win:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(_postRoundState);
-                    _gameManager.IncrementPlayerOneScoreByOne();
-                    break;
-default:
-    break;
-            }
+switch (_postRoundState)
+{
+    case PostRoundStates.Lose:
+        _gameManager.IncrementPlayerTwoScoreByOne();
+        break;
+    case PostRoundStates.Win:
+        _gameManager.IncrementPlayerOneScoreByOne();
+        break;
+    default:
+        break;
+}
 
             _gameManager.IncrementNumberOfRoundsByOne();
-
-            Console.ForegroundColor = ConsoleColor.White;
 
             _gameManager.GetGameDialogueInstance().PostRoundScreenText(_playerMove, _computerMove);
 
