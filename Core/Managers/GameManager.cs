@@ -30,6 +30,8 @@
 
         private readonly RulesManager _rulesManager = RulesManager.Instance;
 
+private readonly GetMostUsedMoveFromListOfMoves _getMostUsedMoveFromListOfMoves = new GetMostUsedMoveFromListOfMoves();
+
         private GameManager()
         {
 
@@ -98,8 +100,6 @@
 
         public string CalculateMostUsedMove()
         {
-            GetMostUsedMoveFromListOfMoves _getMostUsedMoveFromListOfMoves = new GetMostUsedMoveFromListOfMoves();
-
             return _getMostUsedMoveFromListOfMoves.Execute(_movesUsed);
         }
 
