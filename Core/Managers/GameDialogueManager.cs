@@ -1,32 +1,28 @@
-﻿
-
-using Rock_Paper_Scissors.Resources.States;
-
-namespace Rock_Paper_Scissors.Resources.Dialogue
+﻿namespace Rock_Paper_Scissors.Core.Managers
 {
-    using MoveSet;
     using System;
-    using Core;
+    using Resources.MoveSet;
+    using Resources.States;
 
-    public sealed class GameDialogue
+    public sealed class GameDialogueManager
     {
 
-        private static Lazy<GameDialogue> _instance = new Lazy<GameDialogue>(() => new GameDialogue());
+        private static Lazy<GameDialogueManager> _instance = new Lazy<GameDialogueManager>(() => new GameDialogueManager());
 
-        public static GameDialogue Instance
+        public static GameDialogueManager Instance
         {
             get => _instance.Value;
         }
 
-        private GameDialogue()
+        private GameDialogueManager()
         {
-            
+
         }
 
         public void MainMenuDialogue()
         {
             Console.WriteLine("Welcome to Rock Paper Scissors" +
-                              "\nPlease enter one of the following options - (0 - Player Vs Computer, 1 - Quit)"); 
+                              "\nPlease enter one of the following options - (0 - Player Vs Computer, 1 - Quit)");
         }
 
         public void PlayerVsComputerInstructions()
@@ -61,7 +57,7 @@ namespace Rock_Paper_Scissors.Resources.Dialogue
                     Console.ForegroundColor = ConsoleColor.White;
                     break;
             }
-            
+
             Console.WriteLine(_postRoundState);
 
             Console.ForegroundColor = ConsoleColor.White;

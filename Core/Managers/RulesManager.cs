@@ -1,10 +1,10 @@
-﻿using Rock_Paper_Scissors.Resources.States;
-using System;
-using System.Collections.Generic;
-using Rock_Paper_Scissors.Resources.MoveSet;
-
-namespace Rock_Paper_Scissors.Core
+﻿namespace Rock_Paper_Scissors.Core.Managers
 {
+    using System;
+    using System.Collections.Generic;
+    using Resources.MoveSet;
+    using Resources.States;
+
     public sealed class RulesManager
     {
         // Thread safe .Net 4 Singleton Design pattern
@@ -15,7 +15,7 @@ namespace Rock_Paper_Scissors.Core
             get => _instance.Value;
         }
 
-            // Dictionary of Move and list of moves weak too
+        // Dictionary of Move and list of moves weak too
         private static readonly Dictionary<Moves, List<Moves>> _rules = new Dictionary<Moves, List<Moves>>
         {
             {Moves.Rock, new List<Moves> {Moves.Paper}},
@@ -35,7 +35,7 @@ namespace Rock_Paper_Scissors.Core
                 return PostRoundStates.Tie;
             }
 
-            if(_rules[_playerOneMove].Contains(_playerTwoMove))
+            if (_rules[_playerOneMove].Contains(_playerTwoMove))
             {
                 return PostRoundStates.Lose;
             }

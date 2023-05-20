@@ -6,9 +6,4 @@
     <RootNamespace>Rock_Paper_Scissors</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Queries\" />
-  </ItemGroup>
-
 </Project>

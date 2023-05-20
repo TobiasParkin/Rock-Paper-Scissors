@@ -1,36 +1,36 @@
-﻿namespace Rock_Paper_Scissors.Core
+﻿namespace Rock_Paper_Scissors.Core.Managers
 {
     using System;
-    using Resources.Dialogue;
     using System.Collections.Generic;
     using Resources.MoveSet;
     using Resources.States;
     using System.Linq;
+
     public sealed class GameManager
     {
         // Thread safe .Net 4 Singleton Design pattern
-private static Lazy<GameManager> _instance = new Lazy<GameManager>(() => new GameManager() );
+        private static Lazy<GameManager> _instance = new Lazy<GameManager>(() => new GameManager());
 
-public static GameManager Instance
-{
-    get => _instance.Value; 
-}
+        public static GameManager Instance
+        {
+            get => _instance.Value;
+        }
 
-private int _playerOneScore { get; set; }
-private int _playerTwoScore { get; set; }
-private int _numberOfRounds { get; set; }
-private GameStates _state { get; set; }
+        private int _playerOneScore { get; set; }
+        private int _playerTwoScore { get; set; }
+        private int _numberOfRounds { get; set; }
+        private GameStates _state { get; set; }
 
-private List<Moves> _movesUsed = new List<Moves>();
+        private List<Moves> _movesUsed = new List<Moves>();
 
-        private readonly GameDialogue _gameDialogue = GameDialogue.Instance;
+        private readonly GameDialogueManager _gameDialogue = GameDialogueManager.Instance;
 
-private readonly RulesManager _rulesManager = RulesManager.Instance;
+        private readonly RulesManager _rulesManager = RulesManager.Instance;
 
         private GameManager()
-{
+        {
 
-    }
+        }
 
         public int GetPlayerOneScore()
         {
@@ -62,7 +62,7 @@ private readonly RulesManager _rulesManager = RulesManager.Instance;
             return _state;
         }
 
-        public GameDialogue GetGameDialogueInstance()
+        public GameDialogueManager GetGameDialogueInstance()
         {
             return _gameDialogue;
         }
