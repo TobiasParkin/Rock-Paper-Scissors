@@ -6,12 +6,11 @@
     {
         static void Main(string[] args)
         {
-            bool _isGameRunning = true;
 
             Game game = Game.Instance;
 
-        // Initialise Game
-game.Initialise();
+            // Initialise Game
+            bool _isGameRunning = game.Initialise();
 
             while (_isGameRunning)
             {
