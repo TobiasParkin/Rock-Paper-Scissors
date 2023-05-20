@@ -4,8 +4,7 @@
     using System.Collections.Generic;
     using Resources.MoveSet;
     using Resources.States;
-    using System.Linq;
-    using Rock_Paper_Scissors.Core.Queries;
+    using Queries;
 
     public sealed class GameManager
     {
