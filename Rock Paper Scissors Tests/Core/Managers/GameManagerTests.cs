@@ -1,9 +1,8 @@
-﻿using Rock_Paper_Scissors.Core.Managers;
-using Rock_Paper_Scissors.Resources.MoveSet;
-using Rock_Paper_Scissors.Resources.States;
-
-namespace Rock_Paper_Scissors_Tests.Core.Managers
+﻿namespace Rock_Paper_Scissors_Tests.Core.Managers
 {
+    using Rock_Paper_Scissors.Core.Managers;
+    using Rock_Paper_Scissors.Resources.MoveSet;
+    using Rock_Paper_Scissors.Resources.States;
     public class GameManagerTests
     {
         [Fact]
