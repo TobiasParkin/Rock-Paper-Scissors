@@ -107,7 +107,7 @@ _gameManager.AddMoveToMovesUsedTracker(_player2Option);
         {
             Console.Clear();
             
-_gameManager.ShowPostRoundScreen(_postRoundState);
+_gameManager.GetGameDialogueInstance().PostRoundScreenOutcomeText(_postRoundState);
 
 switch (_postRoundState)
 {

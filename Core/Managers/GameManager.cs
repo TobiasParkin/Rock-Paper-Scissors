@@ -112,10 +112,5 @@
         {
             return _rulesManager.GetMoveOutcome(_playerOneMove, _playerTwoMove);
         }
-
-        public void ShowPostRoundScreen(PostRoundStates _postRoundState)
-        {
-            _gameDialogue.PostRoundScreenOutcomeText(_postRoundState);
-        }
     }
 }
