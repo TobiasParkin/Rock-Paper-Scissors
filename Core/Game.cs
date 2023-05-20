@@ -19,7 +19,7 @@ private readonly GameDialogue _gameDialogue = new GameDialogue();
         public bool Initialise()
         {
 bool _gameModeChosen = MainMenu();
-
+            // Returns game state
 return _gameModeChosen;
         }
 
@@ -139,29 +139,33 @@ if (Enum.IsDefined(typeof(Moves), _playerOption) && _playerOption != Moves.Unsel
                 case PostRoundStates.Tie:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine(_postRoundState);
-                    ++_numberOfRounds;
                     break;
                 case PostRoundStates.Lose:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(_postRoundState);
                     ++_computerScore;
-                    ++_numberOfRounds;
                     break;
                 case PostRoundStates.Win:
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine(_postRoundState);
                     ++_playerScore;
-                    ++_numberOfRounds;
                     break;
 default:
     break;
             }
+
+            ++_numberOfRounds;
 
             Console.ForegroundColor = ConsoleColor.White;
 
             Console.WriteLine(_gameDialogue.PostRoundScreenText(_playerMove, _computerMove));
 
             Console.ReadKey();
+
+            if (_playerScore == 3 || _computerScore == 3)
+            {
+                _state = GameStates.GameOver;
+            }
         }
 
         private void GameOverScreen()
@@ -172,7 +176,7 @@ default:
                 _computerScore != _playerScore ? "Player" : "No-one it was a Tie";
 
             string _mostUsedMove = _movesUsed.GroupBy(x => x)
-                    .OrderByDescending(y => y)
+                    .OrderByDescending(y => y.Key)
                     .Select(z => z.Key)
                                     .FirstOrDefault()
                     .ToString();

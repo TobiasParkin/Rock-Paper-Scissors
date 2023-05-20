@@ -10,10 +10,12 @@
 
             Game game = new Game();
 
+        // Initialise Game
 game.Initialise();
 
             while (_isGameRunning)
             {
+        // Main Game Loop
                 _isGameRunning = game.Update();
             }
         }
