@@ -77,8 +77,8 @@ Console.Clear();
             _gameManager.GetGameDialogueInstance().PlayerVsComputerScoreText(_gameManager.GetPlayerOneScore(), _gameManager.GetPlayerTwoScore());
 
             _gameManager.GetGameDialogueInstance().PlayerVsComputerInstructions();
-
-            Moves _computerOption = Enum.Parse<Moves>(rnd.Next(1, 4).ToString());
+        // Computer has access to moves from value 1 in enum to < total length of enum
+            Moves _computerOption = Enum.Parse<Moves>(rnd.Next(1, Enum.GetValues(typeof(Moves)).Length).ToString());
 
 string _playerInput = Console.ReadKey().KeyChar.ToString();
 

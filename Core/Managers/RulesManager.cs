@@ -18,9 +18,11 @@
         // Dictionary of Move and list of moves weak too
         private static readonly Dictionary<Moves, List<Moves>> _rules = new Dictionary<Moves, List<Moves>>
         {
-            {Moves.Rock, new List<Moves> {Moves.Paper}},
-            {Moves.Paper, new List<Moves> {Moves.Scissors}},
-            {Moves.Scissors, new List<Moves> {Moves.Rock}}
+            {Moves.Rock, new List<Moves> {Moves.Paper, Moves.Spock}},
+            {Moves.Paper, new List<Moves> {Moves.Scissors, Moves.Lizard}},
+            {Moves.Scissors, new List<Moves> {Moves.Rock, Moves.Spock}},
+            {Moves.Spock, new List<Moves> {Moves.Lizard, Moves.Paper}},
+            {Moves.Lizard, new List<Moves> {Moves.Rock, Moves.Scissors}}
         };
 
         private RulesManager()

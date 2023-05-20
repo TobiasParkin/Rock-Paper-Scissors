@@ -27,7 +27,7 @@
 
         public void PlayerVsComputerInstructions()
         {
-            Console.WriteLine("Choose your move (1 - Rock, 2 - Scissors, 3 - Paper)");
+            Console.WriteLine("Choose your move (1 - Rock, 2 - Scissors, 3 - Paper, 4 - Spock, 5 - Lizard)");
         }
 
         public void PlayerVsComputerScoreText(int _playerScore, int _computerScore)

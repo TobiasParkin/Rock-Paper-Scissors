@@ -96,7 +96,7 @@
         public string CalculateMostUsedMove()
         {
             string _mostUsedMove = _movesUsed.GroupBy(x => x)
-                .OrderByDescending(y => y.Key)
+                .OrderByDescending(y => y.Count())
                 .Select(z => z.Key)
                 .FirstOrDefault()
                 .ToString();
