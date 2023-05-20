@@ -23,7 +23,9 @@ private GameStates _state { get; set; }
 
 private List<Moves> _movesUsed = new List<Moves>();
 
-        private readonly GameDialogue _gameDialogue = new GameDialogue();
+        private readonly GameDialogue _gameDialogue = GameDialogue.Instance;
+
+private readonly RulesManager _rulesManager = RulesManager.Instance;
 
         private GameManager()
 {
@@ -102,6 +104,11 @@ private List<Moves> _movesUsed = new List<Moves>();
             _mostUsedMove = _movesUsed.Count > 0 ? _mostUsedMove : "None";
 
             return _mostUsedMove;
+        }
+
+        public PostRoundStates GetRoundOutcome(Moves _playerOneMove, Moves _playerTwoMove)
+        {
+            return _rulesManager.GetMoveOutcome(_playerOneMove, _playerTwoMove);
         }
     }
 }

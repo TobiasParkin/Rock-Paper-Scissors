@@ -93,46 +93,7 @@ if (Enum.IsDefined(typeof(Moves), _playerOption) && _playerOption != Moves.Unsel
         {
             PostRoundStates _postRoundState = PostRoundStates.Default;
 
-            if (_player2Option == _playerOption)
-            {
-                _postRoundState = PostRoundStates.Tie;
-            }
-
-            switch (_playerOption)
-            {
-                case Moves.Rock:
-                    if (_player2Option == Moves.Scissors)
-                    {
-                        _postRoundState = PostRoundStates.Win;
-                    }
-                    else if (_player2Option == Moves.Paper)
-                    {
-                        _postRoundState = PostRoundStates.Lose;
-                    }
-                    break;
-                case Moves.Scissors:
-                    if (_player2Option == Moves.Rock)
-                    {
-                        _postRoundState = PostRoundStates.Lose;
-                    }
-                    else if (_player2Option == Moves.Paper)
-                    {
-                        _postRoundState = PostRoundStates.Win;
-                    }
-                    break;
-                case Moves.Paper:
-                    if (_player2Option == Moves.Rock)
-                    {
-                        _postRoundState = PostRoundStates.Win;
-                    }
-                    else if (_player2Option == Moves.Scissors)
-                    {
-                        _postRoundState = PostRoundStates.Lose;
-                    }
-                    break;
-                default:
-                    break;
-            }
+            _postRoundState = _gameManager.GetRoundOutcome(_playerOption, _player2Option);
 
 _gameManager.AddMoveToMovesUsedTracker(_playerOption);
 

@@ -1,10 +1,26 @@
-﻿using System;
+﻿
 
 namespace Rock_Paper_Scissors.Resources.Dialogue
 {
     using MoveSet;
-    public class GameDialogue
+    using System;
+    using Core;
+
+    public sealed class GameDialogue
     {
+
+        private static Lazy<GameDialogue> _instance = new Lazy<GameDialogue>(() => new GameDialogue());
+
+        public static GameDialogue Instance
+        {
+            get => _instance.Value;
+        }
+
+        private GameDialogue()
+        {
+            
+        }
+
         public void MainMenuDialogue()
         {
             Console.WriteLine("Welcome to Rock Paper Scissors" +
