@@ -127,7 +127,7 @@ switch (_postRoundState)
 
             Console.ReadKey();
 
-            if (_gameManager.GetPlayerOneScore() == 3 || _gameManager.GetPlayerTwoScore() == 3)
+            if (_gameManager.GetPlayerOneScore() == _gameManager.GetRoundWinCondition() || _gameManager.GetPlayerTwoScore() == _gameManager.GetRoundWinCondition())
             {
                 _gameManager.SetGameState(GameStates.GameOver);
             }

@@ -19,6 +19,8 @@
         private int _playerOneScore { get; set; }
         private int _playerTwoScore { get; set; }
         private int _numberOfRounds { get; set; }
+        //Number of rounds per game
+        private int _RoundLimit => 7;
         private GameStates _state { get; set; }
 
         private List<Moves> _movesUsed = new List<Moves>();
@@ -47,9 +49,9 @@
             return _numberOfRounds;
         }
 
-        public List<Moves> GetMovesUsedList()
+        public int GetRoundWinCondition()
         {
-            return _movesUsed;
+            return (int)Math.Ceiling((double)_RoundLimit / 2);
         }
 
         public void AddMoveToMovesUsedTracker(Moves _move)
