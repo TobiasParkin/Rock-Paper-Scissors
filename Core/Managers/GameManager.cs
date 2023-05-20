@@ -5,6 +5,7 @@
     using Resources.MoveSet;
     using Resources.States;
     using System.Linq;
+    using Rock_Paper_Scissors.Core.Queries;
 
     public sealed class GameManager
     {
@@ -97,15 +98,9 @@
 
         public string CalculateMostUsedMove()
         {
-            string _mostUsedMove = _movesUsed.GroupBy(x => x)
-                .OrderByDescending(y => y.Count())
-                .Select(z => z.Key)
-                .FirstOrDefault()
-                .ToString();
+            GetMostUsedMoveFromListOfMoves _getMostUsedMoveFromListOfMoves = new GetMostUsedMoveFromListOfMoves();
 
-            _mostUsedMove = _movesUsed.Count > 0 ? _mostUsedMove : "None";
-
-            return _mostUsedMove;
+            return _getMostUsedMoveFromListOfMoves.Execute(_movesUsed);
         }
 
         public PostRoundStates GetRoundOutcome(Moves _playerOneMove, Moves _playerTwoMove)
